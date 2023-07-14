@@ -1,19 +1,18 @@
 import winston from "winston";
 
-
 const logger = winston.createLogger({
-    level: 'info',
+    level: "info",
     format: winston.format.json(),
     //format: winston.format.simple(),
     //defaultMeta: { service: 'user-service' },
     transports: [
-      //
-      // - Write all logs with importance level of `error` or less to `error.log`
-      // - Write all logs with importance level of `info` or less to `combined.log`
-      //
-      new winston.transports.File({ filename: 'error.log', level: 'error' }),
-      new winston.transports.File({ filename: 'combined.log' }),
+        //
+        // - Write all logs with importance level of `error` or less to `error.log`
+        // - Write all logs with importance level of `info` or less to `combined.log`
+        //
+        new winston.transports.File({filename: "error.log", level: "error"}),
+        new winston.transports.File({filename: "combined.log"}),
     ],
-  });
+});
 
-export default logger
+export default logger;

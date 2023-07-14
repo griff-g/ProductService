@@ -1,12 +1,18 @@
-import { Router } from "express";
-import { createProduct } from "../controllers/product.controller.js";
-import { product_validator } from "../validators/product.validator.js";
-import { reqValidator } from "../middleware/request.validator.js";
+import {Router} from "express";
+import {createProduct, getProduct, updateProduct} from "../controllers/product.controller.js";
+import {
+    createProduct_validator,
+    getProduct_validator,
+    updateProduct_validator,
+} from "../validators/product.validator.js";
+import {reqValidator} from "../middleware/request.validator.js";
 
 const router = Router();
 
-router.post("/create", reqValidator(product_validator),(req,res)=>{
-    createProduct(req,res)
-});
+router.post("/create", reqValidator(createProduct_validator), createProduct);
 
-export default router
+router.get("/", reqValidator(getProduct_validator), getProduct);
+
+router.get("/", reqValidator(updateProduct_validator), updateProduct);
+
+export default router;

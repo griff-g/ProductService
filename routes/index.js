@@ -1,7 +1,7 @@
-import {Router } from "express"
-import productRouter from "./product.route.js"
-const router = Router()
+import {Router} from "express";
+import productRouter from "./product.route.js";
+const router = Router();
 
-router.use("/product",productRouter)
+router.use("/product", productRouter);
 
-export default router
+export default router;
