@@ -82,3 +82,22 @@ export const updateProduct = async (req, res) => {
         return responseSend(res, 400, {sucess: false, message: error.message});
     }
 };
+
+export const getAllProducts = async (req, res) => {
+    try {
+		const filter = {
+			price:{
+				$gt:500
+			}
+		}
+		let select,sort,skip,limit,page = {}
+        const documents = await productService.readAllDocuments(filter,{select,sort,skip,limit},page);
+        return responseSend(res, 200, {
+            sucess: true,
+            message: "fetched all documents",
+            data: documents,
+        });
+    } catch (error) {
+        return responseSend(res, 400, {success: false, message: error.message});
+    }
+};

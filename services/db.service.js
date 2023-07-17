@@ -49,7 +49,24 @@ class MongoService {
         return updatedDoc;
     }
 
-    async readAllDocuments(filter, {select, sort, skip, limit}, {page}) {}
+    async readAllDocuments(filter, {select, sort, skip, limit}, {page}) {
+        /* The code `skip = skip ?? 0` is using the nullish coalescing operator (`??`) to assign a default
+value of 0 to the `skip` variable if it is null or undefined. */
+        // skip = skip ?? 0;
+        // filter = filter ?? {};
+        // select = select ?? {};
+        // sort = sort ?? {};
+        // limit = limit ?? 0;
+
+        const documents = await this.model
+            .find(filter)
+            .select(select)
+            .sort(sort)
+            .skip(skip)
+            .limit(limit)
+            .lean();
+        return {documents};
+    }
 }
 
 export default MongoService;
