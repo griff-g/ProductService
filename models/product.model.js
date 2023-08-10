@@ -1,4 +1,4 @@
-import {Schema} from "mongoose";
+import {Schema,model} from "mongoose";
 import MongoService from "../services/db.service.js";
 
 const productSchema = new Schema({
@@ -47,7 +47,7 @@ productSchema.pre("save", function (next) { //
     next();
 });
 
-const productModel = mongoose.model("products", productSchema); //
+const productModel = model("products", productSchema); //
 const ProductService = new MongoService(productModel);
 
 export default ProductService;

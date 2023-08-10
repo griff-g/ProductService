@@ -117,16 +117,19 @@ export const getAllProducts = async (req, res) => {
 
 export const uploadImage = async (req, res) => {
     try {
+        const {publicAccess} = req.body
+        console.log(Number(publicAccess))
         const {processedImage} = req.processed_data;
         const awsUpload = new AwsService()
-        const response = await awsUpload.uploadToS3(processedImage,req.file.originalname)
+        const response = await awsUpload.uploadToS3(processedImage,req.file.originalname,Number(publicAccess))
+        console.log(awsUpload.signedURL(response.Key))
+        
         return responseSend(res, 200, {
             sucess: true,
             message: "successfully uploaded",
             data:response,
         });
     } catch (error) {
-        console.log(error)
         return responseSend(res, 400, {success: false, message: error.message});
         
     }
