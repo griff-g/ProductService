@@ -10,9 +10,9 @@
  * @returns the response object with the specified status code and the provided success, message, and
  * data properties.
  */
-export const responseSend = (res, statusCode, {sucess, message, data}) => {
+export const responseSend = (res, statusCode, {success, message, data}) => {
     return res.status(statusCode).send({
-        sucess,
+        success,
         message,
         data,
     });

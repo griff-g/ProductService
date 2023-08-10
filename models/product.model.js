@@ -1,7 +1,7 @@
-import mongoose from "mongoose";
+import {Schema} from "mongoose";
 import MongoService from "../services/db.service.js";
 
-const productSchema = new mongoose.Schema({
+const productSchema = new Schema({
     product_id: {
         type: String,
         unique: true,
@@ -42,12 +42,12 @@ const productSchema = new mongoose.Schema({
     },
 });
 
-productSchema.pre("save", function (next) {
-    this.product_id = this._id;
+productSchema.pre("save", function (next) { // 
+    this.product_id = this._id; 
     next();
 });
 
-const productModel = mongoose.model("products", productSchema);
+const productModel = mongoose.model("products", productSchema); //
 const ProductService = new MongoService(productModel);
 
 export default ProductService;

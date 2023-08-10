@@ -1,6 +1,11 @@
 import {generateProductSlug} from "../utils/product.util.js";
 import productService from "../models/product.model.js";
 import {responseSend} from "../utils/server.util.js";
+import multer from "multer";
+import s3Client from "../services/aws.service.js";
+import AwsService from "../services/aws.service.js";
+
+const upload = multer({dest: "../uploads"});
 /**
  * The `createProduct` function is an asynchronous function that creates a new product in a database
  * and returns a response with the created product data.
@@ -85,13 +90,21 @@ export const updateProduct = async (req, res) => {
 
 export const getAllProducts = async (req, res) => {
     try {
-		const filter = {
-			price:{
-				$gt:500
-			}
-		}
-		let select,sort,skip,limit,page = {}
-        const documents = await productService.readAllDocuments(filter,{select,sort,skip,limit},page);
+        const filter = {
+            price: {
+                $gt: 500,
+            },
+        };
+        let select,
+            sort,
+            skip,
+            limit,
+            page = {};
+        const documents = await productService.readAllDocuments(
+            filter,
+            {select, sort, skip, limit},
+            page
+        );
         return responseSend(res, 200, {
             sucess: true,
             message: "fetched all documents",
@@ -99,5 +112,22 @@ export const getAllProducts = async (req, res) => {
         });
     } catch (error) {
         return responseSend(res, 400, {success: false, message: error.message});
+    }
+};
+
+export const uploadImage = async (req, res) => {
+    try {
+        const {processedImage} = req.processed_data;
+        const awsUpload = new AwsService()
+        const response = await awsUpload.uploadToS3(processedImage,req.file.originalname)
+        return responseSend(res, 200, {
+            sucess: true,
+            message: "successfully uploaded",
+            data:response,
+        });
+    } catch (error) {
+        console.log(error)
+        return responseSend(res, 400, {success: false, message: error.message});
+        
     }
 };

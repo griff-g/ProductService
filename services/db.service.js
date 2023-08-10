@@ -11,7 +11,7 @@ class MongoService {
      * @returns a promise that resolves to the saved document.
      */
     async createDocument(document) {
-        const doc = new this.model(document);
+        const doc = new this.model(document); 
         return await doc.save();
     }
     /**
@@ -51,7 +51,7 @@ class MongoService {
 
     async readAllDocuments(filter, {select, sort, skip, limit}, {page}) {
         /* The code `skip = skip ?? 0` is using the nullish coalescing operator (`??`) to assign a default
-value of 0 to the `skip` variable if it is null or undefined. */
+        value of 0 to the `skip` variable if it is null or undefined. */
         // skip = skip ?? 0;
         // filter = filter ?? {};
         // select = select ?? {};
